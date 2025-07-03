@@ -46,7 +46,7 @@
     }
 
     return null;
-  }
+  } 
 
   /**
    * Keeps track of the current dispatcher.
