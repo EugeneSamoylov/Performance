@@ -2,32 +2,39 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]  # Укажите вашу основную ветку (main или master)
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Разрешение на запись в репозиторий
-      
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
-    
-    - name: Setup Node.js
+      
+    - name: Setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: 20  # Используйте актуальную версию Node.js
+        node-version: 20
         
     - name: Install dependencies
       run: npm install
       
-    - name: Build project
-      run: npm run build  # Эта команда запустит ваш esbuild.config.js
+    - name: Build
+      run: npm run build
       
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist  # Папка со сборкой
-        keep_files: false     # Очистить целевую ветку перед публикацией
+        path: 'dist/'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
