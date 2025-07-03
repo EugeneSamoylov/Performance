@@ -1,0 +1,11 @@
+{
+  "name": "yandex-home-optimization",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node esbuild.config.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2"
+  },
+  "type": "module"
+}
